@@ -20,6 +20,29 @@
     define("GPA", 3.14);
     echo "The value of GPA is " . GPA . "<br>";
 
+    // while loop syntax
+    $counter = 0;
+    while ($counter < 3) {
+        echo "Count: $counter<br>";
+        $counter++;
+    }
+
+    // array syntax
+    $fruits = array("apple", "banana", "cherry");
+    echo "I like " . $fruits[0];
+
+    $person = array("first_name" => "John", "last_name" => "Doe");
+    echo "Full Name: " . $person["first_name"] . " " . $person["last_name"];
+
+    // debug system
+    $debugVar = "Hello, Debug!";
+    var_dump($debugVar);
+    $debugArray = array(1, 2, 3);
+    print_r($debugArray);
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+
     // PHP Object
     class Student
     {
