@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -54,7 +56,8 @@
             color: #fff;
         }
 
-        .btn-update, .btn-delete {
+        .btn-update,
+        .btn-delete {
             padding: 5px 10px;
             margin-right: 5px;
             background-color: #007BFF;
@@ -64,13 +67,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>User Management</h1>
         <button class="btn" id="add-user-btn">Add User</button>
         <div class="user-form">
             <h2>Add User</h2>
-            <form action="operation.php" method="post">
+            <form method="post" action="">
                 <div>
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -87,7 +91,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button class="btn" id="submit-btn" type="submit">Submit</button>
+                <button class="btn" id="submit-btn" type="submit" name="submit">Submit</button>
             </form>
         </div>
         <h2>All Users</h2>
@@ -129,5 +133,27 @@
             // Here, you can add JavaScript to handle form submission to the server
         });
     </script>
+    <?php
+    include "database.php";
+    echo "file included";
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $mobile = $_POST['mobile'];
+        $password = $_POST['password'];
+
+        $sql = "insert into `crud` (name, email, mobile, password) values('$name', '$email', '$mobile', '$password')";
+        $result = mysqli_query($connection, $sql);
+        if ($result) {
+            echo "Data inserted successfully!";
+        } else {
+            echo die(mysqli_error($connection));
+        }
+    } else {
+        echo "Submit button not clicked!";
+    }
+
+    ?>
 </body>
+
 </html>
