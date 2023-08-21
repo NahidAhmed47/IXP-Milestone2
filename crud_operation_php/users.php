@@ -107,18 +107,27 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Sample user rows go here -->
-                <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>johndoe@example.com</td>
-                    <td>123-456-7890</td>
-                    <td>********</td>
-                    <td>
-                        <button class="btn-update">Update</button>
-                        <button class="btn-delete">Delete</button>
-                    </td>
-                </tr>
+                <?php
+                include "database.php";
+                // get users data
+                $sql = "select * from `crud`";
+                $result = mysqli_query($connection, $sql);
+                if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>
+                        <td>" . $row['id'] . "</td>
+                        <td>" . $row['name'] . "</td>
+                        <td>" . $row['email'] . "</td>
+                        <td>" . $row['mobile'] . "</td>
+                        <td>" . $row['password'] . "</td>
+                        <td><button class='btn-update'>Update</button>
+                        <button class='btn-delete'>Delete</button></td>
+                        </tr>";
+                    }
+                } else {
+                    echo die(mysqli_error($connection));
+                }
+                ?>
             </tbody>
         </table>
     </div>
@@ -128,14 +137,13 @@
             document.querySelector(".user-form").style.display = "block";
         });
 
-        document.getElementById("submit-btn").addEventListener("click", function(e) {
-            e.preventDefault(); // Prevent the form from submitting (for demonstration purposes)
-            // Here, you can add JavaScript to handle form submission to the server
-        });
+        // document.getElementById("submit-btn").addEventListener("click", function(e) {
+        //     e.preventDefault(); // Prevent the form from submitting (for demonstration purposes)
+        //     // Here, you can add JavaScript to handle form submission to the server
+        // });
     </script>
     <?php
     include "database.php";
-    echo "file included";
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -144,13 +152,9 @@
 
         $sql = "insert into `crud` (name, email, mobile, password) values('$name', '$email', '$mobile', '$password')";
         $result = mysqli_query($connection, $sql);
-        if ($result) {
-            echo "Data inserted successfully!";
-        } else {
+        if (!$result) {
             echo die(mysqli_error($connection));
         }
-    } else {
-        echo "Submit button not clicked!";
     }
 
     ?>
